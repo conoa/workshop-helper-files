@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu-nocap
+  name: ubuntu-nocap
+spec:
+  containers:
+    - image: ubuntu:24.04
+      name: ubuntu-nocap
+      command:
+        - sleep
+        - "36000"
+      securityContext:
+        capabilities:
+          drop:
+            - ALL
