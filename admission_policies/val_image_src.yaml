@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-image-registries
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+  - name: validate-registries
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+          namespaces:
+          - validate-*
+    validate:
+      message: "Unknown image registry."
+      pattern:
+        spec:
+          =(ephemeralContainers):
+            - image: "ghcr.io/* | docker.io/nginxinc/nginx-unprivileged:*"
+          =(initContainers):
+            - image: "ghcr.io/* | docker.io/nginxinc/nginx-unprivileged:*"
+          containers:
+            - image: "ghcr.io/* | docker.io/nginxinc/nginx-unprivileged:*"
+
