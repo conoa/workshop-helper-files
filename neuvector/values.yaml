@@ -1,0 +1,7 @@
+# Intended for a low availability demo setup
+controller:
+  replicas: 1
+cve:
+  scanner:
+    enabled: true
+    replicas: 1
